@@ -1,0 +1,37 @@
+{
+  "name": "user-management-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "dev": "nodemon src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-personal:nadun-dilshan/user-management-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.3",
+    "nodemailer": "^7.0.10"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mongoose": "^5.11.96",
+    "@types/nodemailer": "^7.0.3",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

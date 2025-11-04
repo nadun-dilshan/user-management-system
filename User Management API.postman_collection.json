@@ -1,0 +1,1592 @@
+{
+	"info": {
+		"_postman_id": "f8fa2a4d-c344-4ab6-af08-6aa218677ef0",
+		"name": "User Management API",
+		"description": "API for user management system with JWT authentication, refresh tokens, and admin functionalities.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47587212"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user. Sends a verification email with a token."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								},
+								"description": "Register a new user. Sends a verification email with a token."
+							},
+							"status": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User registered. Please verify your email.\"}"
+						},
+						{
+							"name": "Error - Email Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								},
+								"description": "Register a new user. Sends a verification email with a token."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Email already exists\"}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login user and return JWT access and refresh tokens."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								},
+								"description": "Login user and return JWT access and refresh tokens."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"accessToken\": \"<jwt_access_token>\", \"refreshToken\": \"<jwt_refresh_token>\"}"
+						},
+						{
+							"name": "Error - Invalid Credentials",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								},
+								"description": "Login user and return JWT access and refresh tokens."
+							},
+							"status": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Invalid credentials\"}"
+						},
+						{
+							"name": "Error - Account Not Verified",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								},
+								"description": "Login user and return JWT access and refresh tokens."
+							},
+							"status": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Account not verified\"}"
+						}
+					]
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/verify/:token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "<verification_token>",
+									"description": "Email verification token"
+								}
+							]
+						},
+						"description": "Verify user email using the token sent to their email."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/verify/:token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"verify",
+										":token"
+									],
+									"variable": [
+										{
+											"key": "token",
+											"value": "<verification_token>",
+											"description": "Email verification token"
+										}
+									]
+								},
+								"description": "Verify user email using the token sent to their email."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Email verified successfully\"}"
+						},
+						{
+							"name": "Error - Invalid Token",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/verify/:token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"verify",
+										":token"
+									],
+									"variable": [
+										{
+											"key": "token",
+											"value": "<verification_token>",
+											"description": "Email verification token"
+										}
+									]
+								},
+								"description": "Verify user email using the token sent to their email."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Invalid or expired token\"}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/forgot-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"forgot-password"
+							]
+						},
+						"description": "Request a password reset link to be sent to the user's email."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/forgot-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"forgot-password"
+									]
+								},
+								"description": "Request a password reset link to be sent to the user's email."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Password reset email sent\"}"
+						},
+						{
+							"name": "Error - User Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/forgot-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"forgot-password"
+									]
+								},
+								"description": "Request a password reset link to be sent to the user's email."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User not found\"}"
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/reset-password/:token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "<reset_token>",
+									"description": "Password reset token"
+								}
+							]
+						},
+						"description": "Reset user password using the token sent to their email."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/reset-password/:token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"reset-password",
+										":token"
+									],
+									"variable": [
+										{
+											"key": "token",
+											"value": "<reset_token>",
+											"description": "Password reset token"
+										}
+									]
+								},
+								"description": "Reset user password using the token sent to their email."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Password reset successfully\"}"
+						},
+						{
+							"name": "Error - Invalid Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/reset-password/:token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"reset-password",
+										":token"
+									],
+									"variable": [
+										{
+											"key": "token",
+											"value": "<reset_token>",
+											"description": "Password reset token"
+										}
+									]
+								},
+								"description": "Reset user password using the token sent to their email."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Invalid or expired token\"}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"<jwt_refresh_token>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh-token"
+							]
+						},
+						"description": "Refresh JWT access token using a valid refresh token."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"refreshToken\": \"<jwt_refresh_token>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/refresh-token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"refresh-token"
+									]
+								},
+								"description": "Refresh JWT access token using a valid refresh token."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"accessToken\": \"<new_jwt_access_token>\"}"
+						},
+						{
+							"name": "Error - Invalid Refresh Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"refreshToken\": \"<jwt_refresh_token>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/refresh-token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"refresh-token"
+									]
+								},
+								"description": "Refresh JWT access token using a valid refresh token."
+							},
+							"status": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Invalid refresh token\"}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						},
+						"description": "Retrieve the authenticated user's profile."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Retrieve the authenticated user's profile."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"_id\": \"<user_id>\",\n  \"email\": \"test@example.com\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"role\": \"user\",\n  \"isVerified\": true\n}"
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Retrieve the authenticated user's profile."
+							},
+							"status": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"No token provided\"}"
+						},
+						{
+							"name": "Error - User Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Retrieve the authenticated user's profile."
+							},
+							"status": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User not found\"}"
+						}
+					]
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						},
+						"description": "Update the authenticated user's profile. All fields are optional."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Update the authenticated user's profile. All fields are optional."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"_id\": \"<user_id>\",\n  \"email\": \"jane@example.com\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"role\": \"user\",\n  \"isVerified\": true\n}"
+						},
+						{
+							"name": "Error - Email Exists",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Update the authenticated user's profile. All fields are optional."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Email already exists\"}"
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Update the authenticated user's profile. All fields are optional."
+							},
+							"status": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"No token provided\"}"
+						}
+					]
+				},
+				{
+					"name": "Delete User Account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						},
+						"description": "Delete the authenticated user's account."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Delete the authenticated user's account."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User deleted successfully\"}"
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Delete the authenticated user's account."
+							},
+							"status": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"No token provided\"}"
+						},
+						{
+							"name": "Error - User Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"me"
+									]
+								},
+								"description": "Delete the authenticated user's account."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User not found\"}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							]
+						},
+						"description": "Retrieve a list of all users. Requires admin role."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users"
+									]
+								},
+								"description": "Retrieve a list of all users. Requires admin role."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\n  {\n    \"_id\": \"<user_id>\",\n    \"email\": \"test@example.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"role\": \"user\",\n    \"isVerified\": true\n  }\n]"
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users"
+									]
+								},
+								"description": "Retrieve a list of all users. Requires admin role."
+							},
+							"status": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"No token provided\"}"
+						},
+						{
+							"name": "Error - Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users"
+									]
+								},
+								"description": "Retrieve a list of all users. Requires admin role."
+							},
+							"status": 403,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Unauthorized\"}"
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"admin\",\n  \"isVerified\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "<user_id>",
+									"description": "ID of the user to update"
+								}
+							]
+						},
+						"description": "Update a user's role or verification status. Requires admin role."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"role\": \"admin\",\n  \"isVerified\": true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<user_id>",
+											"description": "ID of the user to update"
+										}
+									]
+								},
+								"description": "Update a user's role or verification status. Requires admin role."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"_id\": \"<user_id>\",\n  \"email\": \"test@example.com\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"role\": \"admin\",\n  \"isVerified\": true\n}"
+						},
+						{
+							"name": "Error - User Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"role\": \"admin\",\n  \"isVerified\": true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<user_id>",
+											"description": "ID of the user to update"
+										}
+									]
+								},
+								"description": "Update a user's role or verification status. Requires admin role."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User not found\"}"
+						},
+						{
+							"name": "Error - Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"role\": \"admin\",\n  \"isVerified\": true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<user_id>",
+											"description": "ID of the user to update"
+										}
+									]
+								},
+								"description": "Update a user's role or verification status. Requires admin role."
+							},
+							"status": 403,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Unauthorized\"}"
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "<user_id>",
+									"description": "ID of the user to delete"
+								}
+							]
+						},
+						"description": "Delete a user by ID. Requires admin role."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<user_id>",
+											"description": "ID of the user to delete"
+										}
+									]
+								},
+								"description": "Delete a user by ID. Requires admin role."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User deleted by admin\"}"
+						},
+						{
+							"name": "Error - User Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<user_id>",
+											"description": "ID of the user to delete"
+										}
+									]
+								},
+								"description": "Delete a user by ID. Requires admin role."
+							},
+							"status": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"User not found\"}"
+						},
+						{
+							"name": "Error - Forbidden",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<user_id>",
+											"description": "ID of the user to delete"
+										}
+									]
+								},
+								"description": "Delete a user by ID. Requires admin role."
+							},
+							"status": 403,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Unauthorized\"}"
+						}
+					]
+				},
+				{
+					"name": "Get Activity Logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/activity-logs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"activity-logs"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "Optional: Filter logs by user ID",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Retrieve activity logs for all users or a specific user. Requires admin role."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/activity-logs",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"activity-logs"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "{{userId}}",
+											"description": "Optional: Filter logs by user ID",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Retrieve activity logs for all users or a specific user. Requires admin role."
+							},
+							"status": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\n  {\n    \"_id\": \"<log_id>\",\n    \"userId\": {\n      \"_id\": \"<user_id>\",\n      \"email\": \"test@example.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\"\n    },\n    \"action\": \"LOGIN\",\n    \"details\": \"User test@example.com logged in\",\n    \"createdAt\": \"2025-11-04T11:06:00.000Z\"\n  }\n]"
+						},
+						{
+							"name": "Error - Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/activity-logs",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"activity-logs"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "{{userId}}",
+											"description": "Optional: Filter logs by user ID",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Retrieve activity logs for all users or a specific user. Requires admin role."
+							},
+							"status": 403,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\": \"Unauthorized\"}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3002",
+			"description": "Base URL of the API"
+		},
+		{
+			"key": "accessToken",
+			"value": "<your_jwt_access_token>",
+			"description": "JWT access token obtained from login"
+		},
+		{
+			"key": "userId",
+			"value": "<user_id>",
+			"description": "ID of a user for admin endpoints"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
