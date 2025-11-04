@@ -1,0 +1,43 @@
+name: CI Build and Test
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]  # LTS Node version; can add more like 20.x
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4  # Latest version for checking out repo
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4  # Latest version for Node setup
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'  # Cache node_modules for faster installs
+        cache-dependency-path: package-lock.json  # Assumes you use npm; use yarn.lock for Yarn
+
+    - name: Install dependencies
+      run: npm ci  # Clean install (faster and more reliable than npm install)
+
+    - name: Run linting
+      run: npm run lint  # Optional: Skip if no lint script
+
+    - name: Build TypeScript
+      run: npm run build  # Compiles TS to JS in /dist
+
+    # Optional: Upload build artifacts (e.g., /dist folder) for later use
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      if: success()  # Only if build succeeds
+      with:
+        name: dist-build
+        path: dist/
