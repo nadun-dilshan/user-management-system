@@ -43,7 +43,16 @@ export class AuthService {
     await user.save();
     await ActivityLog.create({ userId: user._id, action: 'LOGIN', details: `User ${email} logged in` });
 
-    return { accessToken, refreshToken };
+    const userData = {
+      id: user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+      isVerified: user.isVerified
+    };
+
+    return { accessToken, refreshToken, userData };
   }
 
   async verifyEmail(token: string) {
@@ -114,5 +123,20 @@ export class AuthService {
     });
 
     return { message: 'Verification email resent successfully' };
+  }
+
+  async logout(userId: string) {
+    const user = await User.findById(userId);
+    if (!user) throw new Error('User not found');
+
+    user.refreshToken = undefined; // Clear refresh token
+    await user.save();
+    await ActivityLog.create({
+      userId: user._id,
+      action: 'LOGOUT',
+      details: `User ${user.email} logged out`,
+    });
+
+    return { message: 'Logged out successfully' };
   }
 }

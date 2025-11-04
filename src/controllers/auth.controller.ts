@@ -76,4 +76,13 @@ export class AuthController {
       res.status(400).json({ message: error.message });
     }
   }
+  
+  async logout(req: Request, res: Response) {
+    try {
+      const result = await authService.logout(req.user!.userId);
+      res.json(result);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
 }
