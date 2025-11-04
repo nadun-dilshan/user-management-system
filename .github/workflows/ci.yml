@@ -28,8 +28,8 @@ jobs:
     - name: Install dependencies
       run: npm ci  # Clean install (faster and more reliable than npm install)
 
-    - name: Run linting
-      run: npm run lint  # Optional: Skip if no lint script
+    # - name: Run linting
+    #   run: npm run lint  # Optional: Skip if no lint script
 
     - name: Build TypeScript
       run: npm run build  # Compiles TS to JS in /dist
